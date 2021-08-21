@@ -1,3 +1,4 @@
+/* eslint-disable arrow-parens */
 /* eslint-disable no-unused-vars */
 /* eslint-disable prefer-const */
 /* eslint-disable no-trailing-spaces */
@@ -9,6 +10,7 @@
 // });
 
 'use strict';
+
 
 // таймер
 function counterTimer(deadLine) {
@@ -46,12 +48,15 @@ function counterTimer(deadLine) {
     timerSeconds.textContent = timer.seconds;
   }
 
+  let repeatRun = setInterval(updateClock, 1000, deadLine);
+
   if (new Date().getTime() <= new Date(deadLine).getTime()) {
     setInterval(updateClock, 1000, deadLine);
   } else {
     timerHours.textContent = '00';
     timerMinutes.textContent = '00';
     timerSeconds.textContent = '00';
+    clearInterval(repeatRun);
   }
 
 }

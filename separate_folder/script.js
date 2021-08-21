@@ -21,7 +21,6 @@ const timesOfDay = function () {
     timeHoursNow = 'Доброе утро!';
     return timeHoursNow;
   } else if (timeHours <= 17 && timeHours > 12) {
-    console.log('Добрый день!');
     timeHoursNow = 'Добрый день!';
     return timeHoursNow;
   } else if (timeHours <= 24 && timeHours > 17) {
@@ -42,7 +41,6 @@ const getWeekDay = function () {
   const date = new Date();
   const days = ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'];
   const day = date.getDay();
-  console.log('Сегодня: ', days[day]);
   return days[day];
 };
 getWeekDay();
@@ -56,20 +54,64 @@ const currentTime = function () {
     hour12: true,
   };
   const time = new Intl.DateTimeFormat('en-US', options).format(dateToday);
-  console.log(time);
   return time;
 };
 currentTime();
 
-// осталось до нового года
-const daysBeforeNewYear = function () {
-  const daysBefore = Math.ceil((new Date('1 january 2022') - dateToday) / 1000 / 60 / 60 / 24);
-  console.log(daysBefore);
-  return daysBefore;
-};
-daysBeforeNewYear();
 
 newYearsSoon1.textContent = `${timesOfDay()}`;
 newYearsSoon2.textContent = `Сегодня ${getWeekDay()}`;
 newYearsSoon3.textContent = `Текущее время: ${currentTime()}`;
-newYearsSoon4.textContent = `До Нового Года осталось(ся) ${daysBeforeNewYear()} дня(дней)(день)`;
+
+
+// осталось до нового года
+const timerDays = document.querySelector('#timer-days');
+const timerHours = document.querySelector('#timer-hours');
+const timerMinutes = document.querySelector('#timer-minutes');
+const timerSeconds = document.querySelector('#timer-seconds');
+
+
+function getTimeRemaining() {
+  const dateStop = new Date('1 january 2022').getTime();
+  const dateNow = new Date().getTime();
+  const timeRemaining = (dateStop - dateNow) / 1000;
+  const seconds = Math.floor(timeRemaining % 60);
+  const minutes = Math.floor((timeRemaining / 60) % 60);
+  const hours = Math.floor((timeRemaining / 60) / 60 % 24);
+  const days = Math.floor(timeRemaining / 60 / 60 / 24);
+
+  return { days, hours, minutes, seconds };
+}
+
+function updateClock() {
+  const timer = getTimeRemaining();
+
+  if (timer.days < 10) {
+    timer.days = '0' + timer.days;
+  }
+  if (timer.minutes < 10) {
+    timer.minutes = '0' + timer.minutes;
+  }
+  if (timer.hours < 10) {
+    timer.hours = '0' + timer.hours;
+  }
+  if (timer.seconds < 10) {
+    timer.seconds = '0' + timer.seconds;
+  }
+
+  timerDays.textContent = timer.days;
+  timerHours.textContent = timer.hours;
+  timerMinutes.textContent = timer.minutes;
+  timerSeconds.textContent = timer.seconds;
+}
+
+const repeatRun = setInterval(updateClock, 1000, new Date('1 january 2022'));
+
+if (new Date().getTime() <= new Date('1 january 2022').getTime()) {
+  setInterval(updateClock, 1000, '1 january 2022');
+} else {
+  timerHours.textContent = '00';
+  timerMinutes.textContent = '00';
+  timerSeconds.textContent = '00';
+  clearInterval(repeatRun);
+}

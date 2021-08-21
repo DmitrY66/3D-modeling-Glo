@@ -7,7 +7,7 @@ section {
   margin-top: 100px;
 }
 
-p {
+p, span, .timer-action{
   font-family:'Courier New', Courier, monospace;
   font-size: 29px;
   font-weight: 400;
