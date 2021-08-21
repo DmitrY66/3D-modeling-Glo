@@ -46,18 +46,17 @@ function counterTimer(deadLine) {
     timerHours.textContent = timer.hours;
     timerMinutes.textContent = timer.minutes;
     timerSeconds.textContent = timer.seconds;
+
   }
 
   let repeatRun = setInterval(updateClock, 1000, deadLine);
 
-  if (new Date().getTime() <= new Date(deadLine).getTime()) {
-    setInterval(updateClock, 1000, deadLine);
-  } else {
+  if (new Date().getTime() >= new Date(deadLine).getTime()) {
+    clearInterval(repeatRun);
     timerHours.textContent = '00';
     timerMinutes.textContent = '00';
     timerSeconds.textContent = '00';
-    clearInterval(repeatRun);
-  }
+  } 
 
 }
 
