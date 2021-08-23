@@ -105,9 +105,9 @@ const togglePopup = () => {
       if (widthWin > 768) {
         const movePopup = () => {
           count++;
-          popupContent.style.top = count + '%';
-          if (count < 10) {
-            setTimeout(movePopup, 10);
+          popupContent.style.top = -30 + count + '%';
+          if (count < 50) {
+            setTimeout(movePopup, 6);
           }
         };
         movePopup();
