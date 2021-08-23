@@ -104,7 +104,7 @@ body menu {
   height: 100vh;
   background-color: #000;
   opacity: 0.9;
-  left: 0;
+  left: -50%;
   margin: 0;
   top: 0;
   z-index: 99;
