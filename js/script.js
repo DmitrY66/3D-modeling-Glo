@@ -61,3 +61,65 @@ function counterTimer(deadLine) {
 }
 
 counterTimer('1 january 2022');
+
+
+// меню
+const toggleMenu = () => {
+
+  const btnMenu = document.querySelector('.menu');
+  const menu = document.querySelector('menu');
+  const closeBtn = document.querySelector('.close-btn');
+  const menuItems = menu.querySelectorAll('ul>li');
+
+  const handlerMenu = () => {
+    menu.classList.toggle('active-menu');
+  };
+
+  btnMenu.addEventListener('click', handlerMenu);
+
+  closeBtn.addEventListener('click', handlerMenu);
+
+  menuItems.forEach(elem => elem.addEventListener('click', handlerMenu));
+
+};
+
+toggleMenu();
+
+
+// popup
+const togglePopup = () => {
+
+  const popup = document.querySelector('.popup');
+  const popupBtn = document.querySelectorAll('.popup-btn');
+  const popUpClose = document.querySelector('.popup-close');
+  const popupContent = document.querySelector('.popup-content');
+  let count = 0;
+
+
+  popupBtn.forEach((elem) => {
+    elem.addEventListener('click', () => {
+      let widthWin = window.innerWidth;
+      popup.style.display = 'block';
+
+
+      if (widthWin > 768) {
+        const movePopup = () => {
+          count++;
+          popupContent.style.top = count + '%';
+          if (count < 10) {
+            setTimeout(movePopup, 10);
+          }
+        };
+        movePopup();
+      }
+    });
+  });
+
+  popUpClose.addEventListener('click', () => {
+    popup.style.display = 'none';
+    count = 0;
+  });
+
+};
+
+togglePopup();
