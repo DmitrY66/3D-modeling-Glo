@@ -12,7 +12,7 @@
 'use strict';
 
 
-// таймер
+// timer
 function counterTimer(deadLine) {
 
   let timerHours = document.querySelector('#timer-hours');
@@ -63,7 +63,7 @@ function counterTimer(deadLine) {
 counterTimer('1 january 2022');
 
 
-// меню
+// menu
 const toggleMenu = () => {
 
   const btnMenu = document.querySelector('.menu');
@@ -191,7 +191,7 @@ const slider = () => {
       });
     }
   };
-  
+
   addPoints();
 
   const dot = document.querySelectorAll('.dot');
@@ -278,3 +278,92 @@ const slider = () => {
 };
 
 slider();
+
+
+// our team
+const command = document.querySelector('#command');
+command.addEventListener('mouseover', (e) => {
+  let target = e.target;
+  if (target.className === 'command__photo') {
+    target.dataset.a = target.src;
+    target.src = target.dataset.img;
+  }
+});
+command.addEventListener('mouseout', (e) => {
+  let target = e.target;
+  if (target.className === 'command__photo') {
+    target.src = target.dataset.a;
+  }
+});
+
+
+// calculator
+const calcBlock = document.querySelector('.calc-block');
+
+calcBlock.addEventListener('input', (e) => {
+  let target = e.target;
+  if (target.matches('INPUT')) {
+    target.value = target.value.replace(/\D/g, '');
+  }
+});
+
+
+// connect
+const clearInput = (elem) => {
+  elem.value = elem.value.replace(/ +/g, ' ');
+  elem.value = elem.value.replace(/-+/g, '-');
+  elem.value = elem.value.replace(/^-/g, '');
+  elem.value = elem.value.replace(/-$/g, '').trim();
+};
+
+const form2Name = document.querySelector('#form2-name');
+const form2Email = document.querySelector('#form2-email');
+const form2Phone = document.querySelector('#form2-phone');
+const form2Message = document.querySelector('#form2-email');
+
+form2Name.addEventListener('blur', () => {
+  form2Name.value = form2Name.value.replace(/[^а-яА-ЯёЁ -]/g, '');
+  clearInput(form2Name);
+  form2Name.value = form2Name.value.split(/\s+/).map(word => word[0].toUpperCase() + word.substring(1)).join(' ');
+});
+
+form2Email.addEventListener('blur', () => {
+  form2Email.value = form2Email.value.replace(/[^a-zA-Z@-_!~*'.]/g, '');
+  clearInput(form2Email);
+});
+
+form2Phone.addEventListener('blur', () => {
+  form2Phone.value = form2Phone.value.replace(/[^()-D]/g, '');
+  clearInput(form2Phone);
+});
+
+form2Message.addEventListener('blur', () => {
+  form2Message.value = form2Message.value.replace(/[^а-яА-ЯёЁ -]/g, '');
+  clearInput(form2Message);
+});
+
+
+// const form2 = document.querySelector('#form2');
+
+// form2.addEventListener('focusout', (e) => {
+//   let target = e.target;
+
+//   if (target.matches('#form2-name')) {
+//     target.value = target.value.replace(/[^а-яА-ЯёЁ -]/g, '');
+//     clearInput(target.value);
+//     form2Name.value = 
+//     form2Name.value.split(/\s+/).map(word => word[0].toUpperCase() + word.substring(1)).join(' ');
+//   }
+//   if (target.matches('#form2-message')) {
+//     target.value = target.value.replace(/[^а-яА-ЯёЁ -]/g, '');
+//     clearInput(target.value);
+//   }
+//   if (target.matches('#form2-email')) {
+//     target.value = target.value.replace(/[^a-zA-Z@-_!~*'.]/g, '');
+//     clearInput(target.value);
+//   }
+//   if (target.matches('#form2-phone')) {
+//     target.value = target.value.replace(/[^()-D]/g, '');
+//     clearInput(target.value);
+//   }
+// });
