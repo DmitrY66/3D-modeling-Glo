@@ -63,6 +63,15 @@ function counterTimer(deadLine) {
 counterTimer('1 january 2022');
 
 
+// universal validation
+const clearInput = (elem) => {
+  elem.value = elem.value.replace(/ +/g, ' ');
+  elem.value = elem.value.replace(/-+/g, '-');
+  elem.value = elem.value.replace(/^-/g, '');
+  elem.value = elem.value.replace(/-$/g, '').trim();
+};
+
+
 // menu
 const toggleMenu = () => {
 
@@ -101,6 +110,27 @@ const togglePopup = () => {
     elem.addEventListener('click', () => {
       let widthWin = window.innerWidth;
       popup.style.display = 'block';
+
+
+      // popup validation
+      const form3 = document.querySelector('#form3');
+      form3.addEventListener('focusout', (e) => {
+        let target = e.target;
+
+        if (target.matches('#form3-name')) {
+          target.value = target.value.replace(/[^а-яА-ЯёЁ -]/g, '');
+          clearInput(target);
+          target.value = target.value.split(/\s+/).map(word => word[0].toUpperCase() + word.substring(1)).join(' ');
+        }
+        if (target.matches('#form3-email')) {
+          target.value = target.value.replace(/[^a-zA-Z@-_!~*'.]/g, '');
+          clearInput(target);
+        }
+        if (target.matches('#form3-phone')) {
+          target.value = target.value.replace(/[^()-D]/g, '');
+          clearInput(target);
+        }
+      });
 
 
       if (widthWin > 768) {
@@ -300,7 +330,7 @@ command.addEventListener('mouseout', (e) => {
 // calculator
 const calcBlock = document.querySelector('.calc-block');
 
-calcBlock.addEventListener('input', (e) => {
+calcBlock.addEventListener('focusout', (e) => {
   let target = e.target;
   if (target.matches('INPUT')) {
     target.value = target.value.replace(/\D/g, '');
@@ -309,13 +339,6 @@ calcBlock.addEventListener('input', (e) => {
 
 
 // connect
-const clearInput = (elem) => {
-  elem.value = elem.value.replace(/ +/g, ' ');
-  elem.value = elem.value.replace(/-+/g, '-');
-  elem.value = elem.value.replace(/^-/g, '');
-  elem.value = elem.value.replace(/-$/g, '').trim();
-};
-
 const form2Name = document.querySelector('#form2-name');
 const form2Email = document.querySelector('#form2-email');
 const form2Phone = document.querySelector('#form2-phone');
@@ -350,20 +373,55 @@ form2Message.addEventListener('blur', () => {
 
 //   if (target.matches('#form2-name')) {
 //     target.value = target.value.replace(/[^а-яА-ЯёЁ -]/g, '');
-//     clearInput(target.value);
+//     clearInput(target);
 //     form2Name.value = 
 //     form2Name.value.split(/\s+/).map(word => word[0].toUpperCase() + word.substring(1)).join(' ');
 //   }
 //   if (target.matches('#form2-message')) {
 //     target.value = target.value.replace(/[^а-яА-ЯёЁ -]/g, '');
-//     clearInput(target.value);
+//     clearInput(target);
 //   }
 //   if (target.matches('#form2-email')) {
 //     target.value = target.value.replace(/[^a-zA-Z@-_!~*'.]/g, '');
-//     clearInput(target.value);
+//     clearInput(target);
 //   }
 //   if (target.matches('#form2-phone')) {
 //     target.value = target.value.replace(/[^()-D]/g, '');
-//     clearInput(target.value);
 //   }
 // });
+
+
+// header validation
+const form1 = document.querySelector('#form1');
+form1.addEventListener('focusout', (e) => {
+  let target = e.target;
+
+  if (target.matches('#form1-name')) {
+    target.value = target.value.replace(/[^а-яА-ЯёЁ -]/g, '');
+    clearInput(target);
+    target.value =
+      target.value.split(/\s+/).map(word => word[0].toUpperCase() + word.substring(1)).join(' ');
+  }
+  if (target.matches('#form1-email')) {
+    target.value = target.value.replace(/[^a-zA-Z@-_!~*'.]/g, '');
+    clearInput(target);
+  }
+  if (target.matches('#form1-phone')) {
+    target.value = target.value.replace(/[^()-D]/g, '');
+    clearInput(target);
+  }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
