@@ -5,9 +5,6 @@
 /* eslint-disable indent */
 /* eslint-disable strict */
 
-// document.addEventListener('DOMСontentLoaded', () => {
-// событие не срабатывает во всех браузерах. не гуглится!
-// });
 
 'use strict';
 
@@ -86,9 +83,7 @@ const toggleMenu = () => {
 
   menu.addEventListener('click', (e) => {
     let target = e.target;
-    // console.log('target: ', target);
-    if (target.target.tagName !== 'A') {
-      // console.log(target.tagName);
+    if (target.matches('a')) {
       menu.classList.remove('active-menu');
     }
   });
@@ -116,22 +111,37 @@ const togglePopup = () => {
       const form3 = document.querySelector('#form3');
       form3.addEventListener('focusout', (e) => {
         let target = e.target;
+        let mask = target.value;
 
         if (target.matches('#form3-name')) {
           target.value = target.value.replace(/[^а-яА-ЯёЁ -]/g, '');
           clearInput(target);
-          target.value = target.value.split(/\s+/).map(word => word[0].toUpperCase() + word.substring(1)).join(' ');
+          if (target.value !== '') {
+            target.value = target.value.split(/\s+/).map(word => word[0].toUpperCase() + word.substring(1)).join(' ');
+          } else {
+            target.placeholder = "Имя русскими буквами";
+          }
         }
+
         if (target.matches('#form3-email')) {
-          target.value = target.value.replace(/[^a-zA-Z@-_!~*'.]/g, '');
-          clearInput(target);
+          mask = mask.match(/\w+@\w+\.\w{2,4}/g);
+          // console.log('mask: ', mask);
+          target.value = mask;
+          target.value = target.value.replace(/_+/g, '_');
+          if (target.value === '') {
+            target.placeholder = "Образец: mail@domen.zone";
+          }
         }
+
         if (target.matches('#form3-phone')) {
-          target.value = target.value.replace(/[^()-D]/g, '');
-          clearInput(target);
+          mask = mask.match(/\+\d{11}/g);
+          // console.log('mask: ', mask);
+          target.value = mask;
+          if (target.value === '') {
+            target.placeholder = "Образец: +00000000000";
+          }
         }
       });
-
 
       if (widthWin > 768) {
         const movePopup = () => {
@@ -329,7 +339,6 @@ command.addEventListener('mouseout', (e) => {
 
 // calculator
 const calcBlock = document.querySelector('.calc-block');
-
 calcBlock.addEventListener('focusout', (e) => {
   let target = e.target;
   if (target.matches('INPUT')) {
@@ -338,90 +347,82 @@ calcBlock.addEventListener('focusout', (e) => {
 });
 
 
-// connect
-const form2Name = document.querySelector('#form2-name');
-const form2Email = document.querySelector('#form2-email');
-const form2Phone = document.querySelector('#form2-phone');
-const form2Message = document.querySelector('#form2-email');
-
-form2Name.addEventListener('blur', () => {
-  form2Name.value = form2Name.value.replace(/[^а-яА-ЯёЁ -]/g, '');
-  clearInput(form2Name);
-  form2Name.value = form2Name.value.split(/\s+/).map(word => word[0].toUpperCase() + word.substring(1)).join(' ');
-});
-
-form2Email.addEventListener('blur', () => {
-  form2Email.value = form2Email.value.replace(/[^a-zA-Z@-_!~*'.]/g, '');
-  clearInput(form2Email);
-});
-
-form2Phone.addEventListener('blur', () => {
-  form2Phone.value = form2Phone.value.replace(/[^()-D]/g, '');
-  clearInput(form2Phone);
-});
-
-form2Message.addEventListener('blur', () => {
-  form2Message.value = form2Message.value.replace(/[^а-яА-ЯёЁ -]/g, '');
-  clearInput(form2Message);
-});
-
-
-// const form2 = document.querySelector('#form2');
-
-// form2.addEventListener('focusout', (e) => {
-//   let target = e.target;
-
-//   if (target.matches('#form2-name')) {
-//     target.value = target.value.replace(/[^а-яА-ЯёЁ -]/g, '');
-//     clearInput(target);
-//     form2Name.value = 
-//     form2Name.value.split(/\s+/).map(word => word[0].toUpperCase() + word.substring(1)).join(' ');
-//   }
-//   if (target.matches('#form2-message')) {
-//     target.value = target.value.replace(/[^а-яА-ЯёЁ -]/g, '');
-//     clearInput(target);
-//   }
-//   if (target.matches('#form2-email')) {
-//     target.value = target.value.replace(/[^a-zA-Z@-_!~*'.]/g, '');
-//     clearInput(target);
-//   }
-//   if (target.matches('#form2-phone')) {
-//     target.value = target.value.replace(/[^()-D]/g, '');
-//   }
-// });
-
-
 // header validation
 const form1 = document.querySelector('#form1');
 form1.addEventListener('focusout', (e) => {
   let target = e.target;
+  let mask = target.value;
 
   if (target.matches('#form1-name')) {
     target.value = target.value.replace(/[^а-яА-ЯёЁ -]/g, '');
     clearInput(target);
-    target.value =
-      target.value.split(/\s+/).map(word => word[0].toUpperCase() + word.substring(1)).join(' ');
+    if (target.value !== '') {
+      target.value =
+        target.value.split(/\s+/).map(word => word[0].toUpperCase() + word.substring(1).toLowerCase()).join(' ');
+    } else {
+      target.placeholder = "Имя русскими буквами";
+    }
   }
+
   if (target.matches('#form1-email')) {
-    target.value = target.value.replace(/[^a-zA-Z@-_!~*'.]/g, '');
-    clearInput(target);
+    mask = mask.match(/\w+@\w+\.\w{2,4}/g);
+    // console.log('mask: ', mask);
+    target.value = mask;
+    target.value = target.value.replace(/_+/g, '_');
+    if (target.value === '') {
+      target.placeholder = "Образец: mail@domen.zone";
+    }
   }
+
   if (target.matches('#form1-phone')) {
-    target.value = target.value.replace(/[^()-D]/g, '');
-    clearInput(target);
+    mask = mask.match(/\+\d{11}/g);
+    // console.log('mask: ', mask);
+    target.value = mask;
+    if (target.value === '') {
+      target.placeholder = "Образец: +00000000000";
+    }
   }
 });
 
 
+// connect
+const form2 = document.querySelector('#form2');
+form2.addEventListener('focusout', (e) => {
+  let target = e.target;
+  let mask = target.value;
 
+  if (target.matches('#form2-name')) {
+    target.value = target.value.replace(/[^а-яА-ЯёЁ -]/g, '');
+    clearInput(target);
+    if (target.value !== '') {
+      target.value =
+        target.value.split(/\s+/).map(word => word[0].toUpperCase() + word.substring(1).toLowerCase()).join(' ');
+    } else {
+      target.placeholder = "Имя русскими буквами";
+    }
+  }
 
+  if (target.matches('#form2-email')) {
+    mask = mask.match(/\w+@\w+\.\w{2,4}/g);
+    // console.log('mask: ', mask);
+    target.value = mask;
+    target.value = target.value.replace(/_+/g, '_');
+    if (target.value === '') {
+      target.placeholder = "Образец: mail@domen.zone";
+    }
+  }
 
+  if (target.matches('#form2-phone')) {
+    mask = mask.match(/\+\d{11}/g);
+    // console.log('mask: ', mask);
+    target.value = mask;
+    if (target.value === '') {
+      target.placeholder = "Образец: +00000000000";
+    }
+  }
 
-
-
-
-
-
-
-
-
+  if (target.matches('#form2-message')) {
+    target.value = target.value.replace(/[^а-яА-ЯёЁ -]/g, '');
+    clearInput(target);
+  }
+});
