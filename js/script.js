@@ -43,7 +43,6 @@ function counterTimer(deadLine) {
     timerHours.textContent = timer.hours;
     timerMinutes.textContent = timer.minutes;
     timerSeconds.textContent = timer.seconds;
-
   }
 
   let repeatRun = setInterval(updateClock, 1000, deadLine);
@@ -71,7 +70,6 @@ const clearInput = (elem) => {
 
 // menu
 const toggleMenu = () => {
-
   const btnMenu = document.querySelector('.menu');
   const menu = document.querySelector('menu');
 
@@ -87,7 +85,6 @@ const toggleMenu = () => {
       menu.classList.remove('active-menu');
     }
   });
-
 };
 
 toggleMenu();
@@ -95,7 +92,6 @@ toggleMenu();
 
 // popup
 const togglePopup = () => {
-
   const popup = document.querySelector('.popup');
   const popupBtn = document.querySelectorAll('.popup-btn');
   const popupContent = document.querySelector('.popup-content');
@@ -169,7 +165,6 @@ const togglePopup = () => {
     }
     count = 0;
   });
-
 };
 
 togglePopup();
@@ -177,7 +172,6 @@ togglePopup();
 
 // tabs
 const tabs = () => {
-
   const serviceHeader = document.querySelector('.service-header');
   const serviceHeaderTab = document.querySelectorAll('.service-header-tab');
   const serviceTab = document.querySelectorAll('.service-tab');
@@ -206,7 +200,6 @@ const tabs = () => {
       });
     }
   });
-
 };
 
 tabs();
@@ -214,7 +207,6 @@ tabs();
 
 // slider
 const slider = () => {
-
   const portfolioContent = document.querySelector('.portfolio-content');
   const portfolioDots = document.querySelector('.portfolio-dots');
   const portfolioItems = document.querySelectorAll('.portfolio-item');
@@ -314,115 +306,202 @@ const slider = () => {
   });
 
   startSlide(3000);
-
 };
 
 slider();
 
 
 // our team
-const command = document.querySelector('#command');
-command.addEventListener('mouseover', (e) => {
-  let target = e.target;
-  if (target.className === 'command__photo') {
-    target.dataset.a = target.src;
-    target.src = target.dataset.img;
-  }
-});
-command.addEventListener('mouseout', (e) => {
-  let target = e.target;
-  if (target.className === 'command__photo') {
-    target.src = target.dataset.a;
-  }
-});
+const ourTeam = () => {
+  const command = document.querySelector('#command');
+  command.addEventListener('mouseover', (e) => {
+    let target = e.target;
+    if (target.className === 'command__photo') {
+      target.dataset.a = target.src;
+      target.src = target.dataset.img;
+    }
+  });
+  command.addEventListener('mouseout', (e) => {
+    let target = e.target;
+    if (target.className === 'command__photo') {
+      target.src = target.dataset.a;
+    }
+  });
+};
 
-
-// calculator
-const calcBlock = document.querySelector('.calc-block');
-calcBlock.addEventListener('focusout', (e) => {
-  let target = e.target;
-  if (target.matches('INPUT')) {
-    target.value = target.value.replace(/\D/g, '');
-  }
-});
+ourTeam();
 
 
 // header validation
-const form1 = document.querySelector('#form1');
-form1.addEventListener('focusout', (e) => {
-  let target = e.target;
-  let mask = target.value;
+const headerValidation = () => {
+  const form1 = document.querySelector('#form1');
+  form1.addEventListener('focusout', (e) => {
+    let target = e.target;
+    let mask = target.value;
 
-  if (target.matches('#form1-name')) {
-    target.value = target.value.replace(/[^а-яА-ЯёЁ -]/g, '');
-    clearInput(target);
-    if (target.value !== '') {
-      target.value =
-        target.value.split(/\s+/).map(word => word[0].toUpperCase() + word.substring(1).toLowerCase()).join(' ');
-    } else {
-      target.placeholder = "Имя русскими буквами";
+    if (target.matches('#form1-name')) {
+      target.value = target.value.replace(/[^а-яА-ЯёЁ -]/g, '');
+      clearInput(target);
+      if (target.value !== '') {
+        target.value =
+          target.value.split(/\s+/).map(word => word[0].toUpperCase() + word.substring(1).toLowerCase()).join(' ');
+      } else {
+        target.placeholder = "Имя русскими буквами";
+      }
     }
-  }
 
-  if (target.matches('#form1-email')) {
-    mask = mask.match(/\w+@\w+\.\w{2,4}/g);
-    // console.log('mask: ', mask);
-    target.value = mask;
-    target.value = target.value.replace(/_+/g, '_');
-    if (target.value === '') {
-      target.placeholder = "Образец: mail@domen.zone";
+    if (target.matches('#form1-email')) {
+      mask = mask.match(/\w+@\w+\.\w{2,4}/g);
+      // console.log('mask: ', mask);
+      target.value = mask;
+      target.value = target.value.replace(/_+/g, '_');
+      if (target.value === '') {
+        target.placeholder = "Образец: mail@domen.zone";
+      }
     }
-  }
 
-  if (target.matches('#form1-phone')) {
-    mask = mask.match(/\+\d{11}/g);
-    // console.log('mask: ', mask);
-    target.value = mask;
-    if (target.value === '') {
-      target.placeholder = "Образец: +00000000000";
+    if (target.matches('#form1-phone')) {
+      mask = mask.match(/\+\d{11}/g);
+      // console.log('mask: ', mask);
+      target.value = mask;
+      if (target.value === '') {
+        target.placeholder = "Образец: +00000000000";
+      }
     }
-  }
-});
+  });
+};
+
+headerValidation();
 
 
 // connect
-const form2 = document.querySelector('#form2');
-form2.addEventListener('focusout', (e) => {
-  let target = e.target;
-  let mask = target.value;
+const formConnect = () => {
+  const form2 = document.querySelector('#form2');
+  form2.addEventListener('focusout', (e) => {
+    let target = e.target;
+    let mask = target.value;
 
-  if (target.matches('#form2-name')) {
-    target.value = target.value.replace(/[^а-яА-ЯёЁ -]/g, '');
-    clearInput(target);
-    if (target.value !== '') {
-      target.value =
-        target.value.split(/\s+/).map(word => word[0].toUpperCase() + word.substring(1).toLowerCase()).join(' ');
-    } else {
-      target.placeholder = "Имя русскими буквами";
+    if (target.matches('#form2-name')) {
+      target.value = target.value.replace(/[^а-яА-ЯёЁ -]/g, '');
+      clearInput(target);
+      if (target.value !== '') {
+        target.value =
+          target.value.split(/\s+/).map(word => word[0].toUpperCase() + word.substring(1).toLowerCase()).join(' ');
+      } else {
+        target.placeholder = "Имя русскими буквами";
+      }
     }
-  }
 
-  if (target.matches('#form2-email')) {
-    mask = mask.match(/\w+@\w+\.\w{2,4}/g);
-    // console.log('mask: ', mask);
-    target.value = mask;
-    target.value = target.value.replace(/_+/g, '_');
-    if (target.value === '') {
-      target.placeholder = "Образец: mail@domen.zone";
+    if (target.matches('#form2-email')) {
+      mask = mask.match(/\w+@\w+\.\w{2,4}/g);
+      // console.log('mask: ', mask);
+      target.value = mask;
+      target.value = target.value.replace(/_+/g, '_');
+      if (target.value === '') {
+        target.placeholder = "Образец: mail@domen.zone";
+      }
     }
-  }
 
-  if (target.matches('#form2-phone')) {
-    mask = mask.match(/\+\d{11}/g);
-    // console.log('mask: ', mask);
-    target.value = mask;
-    if (target.value === '') {
-      target.placeholder = "Образец: +00000000000";
+    if (target.matches('#form2-phone')) {
+      mask = mask.match(/\+\d{11}/g);
+      // console.log('mask: ', mask);
+      target.value = mask;
+      if (target.value === '') {
+        target.placeholder = "Образец: +00000000000";
+      }
     }
-  }
 
-  if (target.matches('#form2-message')) {
-    target.value = target.value.replace(/[^а-яА-ЯёЁ -]/g, '');
-    clearInput(target);
-  }
-});
+    if (target.matches('#form2-message')) {
+      target.value = target.value.replace(/[^а-яА-ЯёЁ -]/g, '');
+      clearInput(target);
+    }
+  });
+};
+
+formConnect();
+
+
+// calculator
+const calculator = () => {
+  const calcBlock = document.querySelector('.calc-block');
+  calcBlock.addEventListener('focusout', (e) => {
+    let target = e.target;
+    if (target.matches('INPUT')) {
+      target.value = target.value.replace(/\D/g, '');
+    }
+  });
+
+  // расчет суммы
+  const calc = (price = 100) => {
+    const calcType = document.querySelector('.calc-type');
+    const calcSquare = document.querySelector('.calc-square');
+    const calcCount = document.querySelector('.calc-count');
+    const calcDay = document.querySelector('.calc-day');
+    const totalValue = document.getElementById('total');
+    let total = 0;
+
+    const countSum = () => {
+      let countValue = 1;
+      let dayValue = 1;
+      const typeValue = calcType.options[calcType.selectedIndex].value;
+      const squareValue = +calcSquare.value;
+
+      if (calcCount.value > 1) {
+        countValue += (calcCount.value - 1) / 10;
+      }
+
+      if (calcDay.value && calcDay.value < 5) {
+        dayValue *= 2;
+      } else if (calcDay.value && calcDay.value < 10) {
+        dayValue *= 1.5;
+      }
+
+      if (typeValue && squareValue) {
+        total = Math.round(price * typeValue * squareValue * countValue * dayValue);
+      } else {
+        total = 0;
+      }
+      // вывод суммы без эффекта
+      // totalValue.textContent = total;
+    };
+
+    // эффект вывода суммы
+    const outputEffect = () => {
+      const time = 1000;
+      const step = 10;
+      let n = 0;
+      let t = Math.round(time / (total / step));
+      let interval = setInterval(() => {
+        n += step;
+        if (n === total) {
+          clearInterval(interval);
+        }
+        totalValue.textContent = n;
+      }, t);
+
+      calcBlock.addEventListener('change', (e) => {
+        const target = e.target;
+        if (target.matches('select') || target.matches('input')) {
+          clearInterval(interval);
+        }
+      });
+    };
+
+    calcBlock.addEventListener('change', (e) => {
+      const target = e.target;
+      if (target.matches('select') || target.matches('input')) {
+        countSum();
+        if (total !== 0) {
+
+          outputEffect();
+        } else {
+          totalValue.textContent = total;
+        }
+      }
+    });
+  };
+
+  calc(100);
+};
+
+calculator();
