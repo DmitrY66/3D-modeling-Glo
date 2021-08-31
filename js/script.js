@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 /* eslint-disable arrow-parens */
 /* eslint-disable no-unused-vars */
 /* eslint-disable prefer-const */
@@ -59,15 +60,6 @@ function counterTimer(deadLine) {
 counterTimer('1 january 2022');
 
 
-// universal validation
-const clearInput = (elem) => {
-  elem.value = elem.value.replace(/ +/g, ' ');
-  elem.value = elem.value.replace(/-+/g, '-');
-  elem.value = elem.value.replace(/^-/g, '');
-  elem.value = elem.value.replace(/-$/g, '').trim();
-};
-
-
 // menu
 const toggleMenu = () => {
   const btnMenu = document.querySelector('.menu');
@@ -107,22 +99,35 @@ const togglePopup = () => {
       const form3 = document.querySelector('#form3');
       form3.addEventListener('focusout', (e) => {
         let target = e.target;
-        let mask = target.value;
+        if (target.matches('#form2-name, #form2-email, #form2-phone',)) {
+          if (target.value === '') {
+            target.style.background = '';
+          }
+        }
+      });
+      form3.addEventListener('input', (e) => {
+        let target = e.target;
 
         if (target.matches('#form3-name')) {
-          target.value = target.value.replace(/[^а-яА-ЯёЁ -]/g, '');
-          clearInput(target);
+          if (/^[а-яА-Я\s]+$/.test(target.value)) {
+            target.style.background = '#9eff78';
+          } else {
+            target.style.background = '#ffa2a2';
+          }
           if (target.value !== '') {
-            target.value = target.value.split(/\s+/).map(word => word[0].toUpperCase() + word.substring(1)).join(' ');
+            target.value =
+              target.value.split(/\s+/).map(word => word[0].toUpperCase() + word.substring(1).toLowerCase()).join(' ');
           } else {
             target.placeholder = "Имя русскими буквами";
           }
         }
 
         if (target.matches('#form3-email')) {
-          mask = mask.match(/\w+@\w+\.\w{2,4}/g);
-          // console.log('mask: ', mask);
-          target.value = mask;
+          if (/^\w+@{1}\w+\.\w{2,}$/.test(target.value)) {
+            target.style.background = '#9eff78';
+          } else {
+            target.style.background = '#ffa2a2';
+          }
           target.value = target.value.replace(/_+/g, '_');
           if (target.value === '') {
             target.placeholder = "Образец: mail@domen.zone";
@@ -130,9 +135,11 @@ const togglePopup = () => {
         }
 
         if (target.matches('#form3-phone')) {
-          mask = mask.match(/\+\d{11}/g);
-          // console.log('mask: ', mask);
-          target.value = mask;
+          if (/\+\d{11}/.test(target.value)) {
+            target.style.background = '#9eff78';
+          } else {
+            target.style.background = '#ffa2a2';
+          }
           if (target.value === '') {
             target.placeholder = "Образец: +00000000000";
           }
@@ -337,11 +344,21 @@ const headerValidation = () => {
   const form1 = document.querySelector('#form1');
   form1.addEventListener('focusout', (e) => {
     let target = e.target;
-    let mask = target.value;
+    if (target.matches('#form2-name, #form2-email, #form2-phone',)) {
+      if (target.value === '') {
+        target.style.background = '';
+      }
+    }
+  });
+  form1.addEventListener('input', (e) => {
+    let target = e.target;
 
     if (target.matches('#form1-name')) {
-      target.value = target.value.replace(/[^а-яА-ЯёЁ -]/g, '');
-      clearInput(target);
+      if (/^[а-яА-Я\s]+$/.test(target.value)) {
+        target.style.background = '#9eff78';
+      } else {
+        target.style.background = '#ffa2a2';
+      }
       if (target.value !== '') {
         target.value =
           target.value.split(/\s+/).map(word => word[0].toUpperCase() + word.substring(1).toLowerCase()).join(' ');
@@ -351,9 +368,11 @@ const headerValidation = () => {
     }
 
     if (target.matches('#form1-email')) {
-      mask = mask.match(/\w+@\w+\.\w{2,4}/g);
-      // console.log('mask: ', mask);
-      target.value = mask;
+      if (/^\w+@{1}\w+\.\w{2,}$/.test(target.value)) {
+        target.style.background = '#9eff78';
+      } else {
+        target.style.background = '#ffa2a2';
+      }
       target.value = target.value.replace(/_+/g, '_');
       if (target.value === '') {
         target.placeholder = "Образец: mail@domen.zone";
@@ -361,9 +380,11 @@ const headerValidation = () => {
     }
 
     if (target.matches('#form1-phone')) {
-      mask = mask.match(/\+\d{11}/g);
-      // console.log('mask: ', mask);
-      target.value = mask;
+      if (/\+\d{11}/.test(target.value)) {
+        target.style.background = '#9eff78';
+      } else {
+        target.style.background = '#ffa2a2';
+      }
       if (target.value === '') {
         target.placeholder = "Образец: +00000000000";
       }
@@ -379,11 +400,21 @@ const formConnect = () => {
   const form2 = document.querySelector('#form2');
   form2.addEventListener('focusout', (e) => {
     let target = e.target;
-    let mask = target.value;
+    if (target.matches('#form2-name, #form2-email, #form2-phone',)) {
+      if (target.value === '') {
+        target.style.background = '';
+      }
+    }
+  });
+  form2.addEventListener('input', (e) => {
+    let target = e.target;
 
     if (target.matches('#form2-name')) {
-      target.value = target.value.replace(/[^а-яА-ЯёЁ -]/g, '');
-      clearInput(target);
+      if (/^[а-яА-Я\s]+$/.test(target.value)) {
+        target.style.background = '#9eff78';
+      } else {
+        target.style.background = '#ffa2a2';
+      }
       if (target.value !== '') {
         target.value =
           target.value.split(/\s+/).map(word => word[0].toUpperCase() + word.substring(1).toLowerCase()).join(' ');
@@ -393,9 +424,11 @@ const formConnect = () => {
     }
 
     if (target.matches('#form2-email')) {
-      mask = mask.match(/\w+@\w+\.\w{2,4}/g);
-      // console.log('mask: ', mask);
-      target.value = mask;
+      if (/^\w+@{1}\w+\.\w{2,}$/.test(target.value)) {
+        target.style.background = '#9eff78';
+      } else {
+        target.style.background = '#ffa2a2';
+      }
       target.value = target.value.replace(/_+/g, '_');
       if (target.value === '') {
         target.placeholder = "Образец: mail@domen.zone";
@@ -403,17 +436,25 @@ const formConnect = () => {
     }
 
     if (target.matches('#form2-phone')) {
-      mask = mask.match(/\+\d{11}/g);
-      // console.log('mask: ', mask);
-      target.value = mask;
+      if (/\+\d{11}/.test(target.value)) {
+        target.style.background = '#9eff78';
+      } else {
+        target.style.background = '#ffa2a2';
+      }
       if (target.value === '') {
         target.placeholder = "Образец: +00000000000";
       }
     }
 
     if (target.matches('#form2-message')) {
-      target.value = target.value.replace(/[^а-яА-ЯёЁ -]/g, '');
-      clearInput(target);
+      if (/^[\u0400-\u04FF\s\d\.\!\,-\:\(\)\"]+$/.test(target.value)) {
+        target.style.background = '#9eff78';
+      } else {
+        target.style.background = '#ffa2a2';
+      }
+      if (target.value === '') {
+        target.placeholder = "Разрешен ввод только кирилицы";
+      }
     }
   });
 };
@@ -505,3 +546,69 @@ const calculator = () => {
 };
 
 calculator();
+
+
+// send-ajax-form
+const sendForm = () => {
+  const errorMessage = 'Что-то пошло не так!';
+  const loadMessage = 'Загрузка...';
+  const successMessage = 'Спасибо! Мы скоро с Вами свяжемся!';
+  const statusMessage = document.createElement('div');
+
+  statusMessage.textContent = 'Тут будет сообщение!';
+  statusMessage.style.cssText = 'font-size: 2rem';
+
+  const cleanInput = () => {
+    const formInputs = document.querySelectorAll('input');
+    formInputs.forEach(elem => {
+      elem.value = '';
+    });
+  };
+
+  const postData = (body, outputData, errorData) => {
+    const request = new XMLHttpRequest();
+    request.addEventListener('readystatechange', () => {
+      if (request.readyState !== 4) {
+        return;
+      }
+      if (request.status === 200) {
+        outputData();
+        cleanInput();
+      } else {
+        errorData(request.status);
+      }
+    });
+    request.open('POST', './server.php');
+    request.setRequestHeader('Content-Type', 'application/json');
+
+    request.send(JSON.stringify(body));
+  };
+
+  document.body.addEventListener('submit', (e) => {
+    const target = e.target;
+
+    if (target.matches('#form1, #form2, #form3')) {
+      e.preventDefault();
+      target.appendChild(statusMessage);
+      statusMessage.textContent = loadMessage;
+
+      const formData = new FormData(target);
+      let body = {};
+
+      formData.forEach((val, key) => {
+        body[key] = val;
+      });
+      postData(body,
+        () => {
+          statusMessage.textContent = successMessage;
+        },
+        (error) => {
+          statusMessage.textContent = errorMessage;
+          console.error(error);
+        });
+    }
+  });
+
+};
+
+sendForm();
