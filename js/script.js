@@ -97,6 +97,14 @@ const togglePopup = () => {
 
       // popup validation
       const form3 = document.querySelector('#form3');
+
+      let allowShipmentName = false;
+      let allowShipmentEmail = false;
+      let allowShipmentPhone = false;
+
+      const btn = form3[3];
+      btn.disabled = true;
+
       form3.addEventListener('focusout', (e) => {
         let target = e.target;
         if (target.matches('#form2-name, #form2-email, #form2-phone',)) {
@@ -105,12 +113,14 @@ const togglePopup = () => {
           }
         }
       });
+
       form3.addEventListener('input', (e) => {
         let target = e.target;
 
         if (target.matches('#form3-name')) {
           if (/^[а-яА-Я\s]+$/.test(target.value)) {
             target.style.background = '#9eff78';
+            allowShipmentName = true;
           } else {
             target.style.background = '#ffa2a2';
           }
@@ -125,6 +135,7 @@ const togglePopup = () => {
         if (target.matches('#form3-email')) {
           if (/^\w+@{1}\w+\.\w{2,}$/.test(target.value)) {
             target.style.background = '#9eff78';
+            allowShipmentEmail = true;
           } else {
             target.style.background = '#ffa2a2';
           }
@@ -137,6 +148,7 @@ const togglePopup = () => {
         if (target.matches('#form3-phone')) {
           if (/\+\d{11}/.test(target.value)) {
             target.style.background = '#9eff78';
+            allowShipmentPhone = true;
           } else {
             target.style.background = '#ffa2a2';
           }
@@ -144,6 +156,13 @@ const togglePopup = () => {
             target.placeholder = "Образец: +00000000000";
           }
         }
+
+        if (allowShipmentName === true &&
+          allowShipmentEmail === true &&
+          allowShipmentPhone === true) {
+          btn.disabled = false;
+        }
+
       });
 
       if (widthWin > 768) {
@@ -341,7 +360,16 @@ ourTeam();
 
 // header validation
 const headerValidation = () => {
+
+  let allowShipmentName = false;
+  let allowShipmentEmail = false;
+  let allowShipmentPhone = false;
+
   const form1 = document.querySelector('#form1');
+
+  const btn = form1[3];
+  btn.disabled = true;
+
   form1.addEventListener('focusout', (e) => {
     let target = e.target;
     if (target.matches('#form2-name, #form2-email, #form2-phone',)) {
@@ -356,6 +384,7 @@ const headerValidation = () => {
     if (target.matches('#form1-name')) {
       if (/^[а-яА-Я\s]+$/.test(target.value)) {
         target.style.background = '#9eff78';
+        allowShipmentName = true;
       } else {
         target.style.background = '#ffa2a2';
       }
@@ -370,6 +399,7 @@ const headerValidation = () => {
     if (target.matches('#form1-email')) {
       if (/^\w+@{1}\w+\.\w{2,}$/.test(target.value)) {
         target.style.background = '#9eff78';
+        allowShipmentEmail = true;
       } else {
         target.style.background = '#ffa2a2';
       }
@@ -382,12 +412,19 @@ const headerValidation = () => {
     if (target.matches('#form1-phone')) {
       if (/\+\d{11}/.test(target.value)) {
         target.style.background = '#9eff78';
+        allowShipmentPhone = true;
       } else {
         target.style.background = '#ffa2a2';
       }
       if (target.value === '') {
         target.placeholder = "Образец: +00000000000";
       }
+    }
+
+    if (allowShipmentName === true &&
+      allowShipmentEmail === true &&
+      allowShipmentPhone === true) {
+      btn.disabled = false;
     }
   });
 };
@@ -397,7 +434,17 @@ headerValidation();
 
 // connect
 const formConnect = () => {
+
+  let allowShipmentName = false;
+  let allowShipmentEmail = false;
+  let allowShipmentPhone = false;
+  let allowShipmentMessage = false;
+
   const form2 = document.querySelector('#form2');
+
+  const btn = form2[4];
+  btn.disabled = true;
+
   form2.addEventListener('focusout', (e) => {
     let target = e.target;
     if (target.matches('#form2-name, #form2-email, #form2-phone',)) {
@@ -406,12 +453,14 @@ const formConnect = () => {
       }
     }
   });
+
   form2.addEventListener('input', (e) => {
     let target = e.target;
 
     if (target.matches('#form2-name')) {
       if (/^[а-яА-Я\s]+$/.test(target.value)) {
         target.style.background = '#9eff78';
+        allowShipmentName = true;
       } else {
         target.style.background = '#ffa2a2';
       }
@@ -426,6 +475,7 @@ const formConnect = () => {
     if (target.matches('#form2-email')) {
       if (/^\w+@{1}\w+\.\w{2,}$/.test(target.value)) {
         target.style.background = '#9eff78';
+        allowShipmentEmail = true;
       } else {
         target.style.background = '#ffa2a2';
       }
@@ -438,6 +488,7 @@ const formConnect = () => {
     if (target.matches('#form2-phone')) {
       if (/\+\d{11}/.test(target.value)) {
         target.style.background = '#9eff78';
+        allowShipmentPhone = true;
       } else {
         target.style.background = '#ffa2a2';
       }
@@ -449,12 +500,20 @@ const formConnect = () => {
     if (target.matches('#form2-message')) {
       if (/^[\u0400-\u04FF\s\d\.\!\,-\:\(\)\"]+$/.test(target.value)) {
         target.style.background = '#9eff78';
+        allowShipmentMessage = true;
       } else {
         target.style.background = '#ffa2a2';
       }
       if (target.value === '') {
         target.placeholder = "Разрешен ввод только кирилицы";
       }
+    }
+
+    if (allowShipmentName === true &&
+      allowShipmentEmail === true &&
+      allowShipmentPhone === true &&
+      allowShipmentMessage === true) {
+      btn.disabled = false;
     }
   });
 };
@@ -584,7 +643,16 @@ const sendForm = () => {
     request.send(JSON.stringify(body));
   };
 
-  document.body.addEventListener('submit', (e) => {
+  const body = document.body;
+
+  body.addEventListener('click', (e) => {
+    const target = e.target;
+    if (target.matches('button[type="submit"]')) {
+      target.disabled = true;
+    }
+  });
+
+  body.addEventListener('submit', (e) => {
     const target = e.target;
 
     if (target.matches('#form1, #form2, #form3')) {
@@ -608,7 +676,6 @@ const sendForm = () => {
         });
     }
   });
-
 };
 
 sendForm();
