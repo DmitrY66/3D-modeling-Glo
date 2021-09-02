@@ -624,34 +624,34 @@ const sendForm = () => {
     });
   };
 
-  const postData = (body, outputData, errorData) => {
+  const postData = (body) => new Promise((resolve, reject) => {
     const request = new XMLHttpRequest();
     request.addEventListener('readystatechange', () => {
       if (request.readyState !== 4) {
         return;
       }
       if (request.status === 200) {
-        outputData();
+        resolve(request.status);
         cleanInput();
       } else {
-        errorData(request.status);
+        reject(request.status);
       }
     });
     request.open('POST', './server.php');
     request.setRequestHeader('Content-Type', 'application/json');
     request.send(JSON.stringify(body));
-  };
+  });
 
-  const body = document.body;
-
-  body.addEventListener('click', (e) => {
+  const bodyDoc = document.body;
+  
+  bodyDoc.addEventListener('click', (e) => {
     const target = e.target;
     if (target.matches('button[type="submit"]')) {
       target.disabled = true;
     }
   });
 
-  body.addEventListener('submit', (e) => {
+  bodyDoc.addEventListener('submit', (e) => {
     const target = e.target;
 
     if (target.matches('#form1, #form2, #form3')) {
@@ -666,8 +666,8 @@ const sendForm = () => {
         body[key] = val;
       });
 
-      postData(body,
-        () => {
+      postData(body)
+        .then(() => {
           statusMessage.textContent = successMessage;
         },
         (error) => {
