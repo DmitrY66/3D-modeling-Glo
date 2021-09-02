@@ -82,6 +82,90 @@ const toggleMenu = () => {
 toggleMenu();
 
 
+// validation
+// ==============================================
+let labelName = false;
+let labelEmail = false;
+let labelPhone = false;
+let labelMessage = false;
+
+const validName = (target) => {
+  if (/^[а-яА-Я\s]+$/.test(target.value)) {
+    target.style.background = '#9eff78';
+    labelName = true;
+  } else {
+    target.style.background = '#ffa2a2';
+    labelName = false;
+  }
+  if (target.value !== '') {
+    target.value =
+      target.value.split(/\s+/).map(word => word[0].toUpperCase() + word.substring(1).toLowerCase()).join(' ');
+  } else {
+    target.placeholder = "Имя русскими буквами";
+  }
+};
+
+const validEmail = (target) => {
+  if (/^\w+@{1}\w+\.\w{2,}$/.test(target.value)) {
+    target.style.background = '#9eff78';
+    labelEmail = true;
+  } else {
+    target.style.background = '#ffa2a2';
+    labelEmail = false;
+  }
+  target.value = target.value.replace(/_+/g, '_');
+  if (target.value === '') {
+    target.placeholder = "Образец: mail@domen.zone";
+  }
+};
+
+const validPhone = (target) => {
+  if (/\+\d{11}/.test(target.value)) {
+    target.style.background = '#9eff78';
+    labelPhone = true;
+  } else {
+    target.style.background = '#ffa2a2';
+    labelPhone = false;
+  }
+  if (target.value === '') {
+    target.placeholder = "Образец: +00000000000";
+  }
+};
+
+const validMessage = (target) => {
+  if (/^[\u0400-\u04FF\s\d\.\!\,-\:\(\)\"]+$/.test(target.value)) {
+    target.style.background = '#9eff78';
+    labelMessage = true;
+  } else {
+    target.style.background = '#ffa2a2';
+    labelMessage = false;
+  }
+  if (target.value === '') {
+    target.placeholder = "Разрешен ввод только кирилицы";
+  }
+};
+
+const activeButton = (target) => {
+  if (labelName === true &&
+    labelEmail === true &&
+    labelPhone === true) {
+    target.disabled = false;
+  }
+};
+
+const backgroundOut = (target) => {
+  target.addEventListener('focusout', (e) => {
+    let target = e.target;
+    if (target.matches('#form2-name, #form2-email, #form2-phone, #form2-message',)) {
+      if (target.value === '') {
+        target.style.background = '';
+      }
+    }
+  });
+};
+// ==============================================
+
+
 // popup
 const togglePopup = () => {
   const popup = document.querySelector('.popup');
@@ -98,71 +182,27 @@ const togglePopup = () => {
       // popup validation
       const form3 = document.querySelector('#form3');
 
-      let allowShipmentName = false;
-      let allowShipmentEmail = false;
-      let allowShipmentPhone = false;
-
       const btn = form3[3];
       btn.disabled = true;
 
-      form3.addEventListener('focusout', (e) => {
-        let target = e.target;
-        if (target.matches('#form2-name, #form2-email, #form2-phone',)) {
-          if (target.value === '') {
-            target.style.background = '';
-          }
-        }
-      });
+      backgroundOut(form3);
 
       form3.addEventListener('input', (e) => {
         let target = e.target;
 
         if (target.matches('#form3-name')) {
-          if (/^[а-яА-Я\s]+$/.test(target.value)) {
-            target.style.background = '#9eff78';
-            allowShipmentName = true;
-          } else {
-            target.style.background = '#ffa2a2';
-          }
-          if (target.value !== '') {
-            target.value =
-              target.value.split(/\s+/).map(word => word[0].toUpperCase() + word.substring(1).toLowerCase()).join(' ');
-          } else {
-            target.placeholder = "Имя русскими буквами";
-          }
+          validName(target);
         }
 
         if (target.matches('#form3-email')) {
-          if (/^\w+@{1}\w+\.\w{2,}$/.test(target.value)) {
-            target.style.background = '#9eff78';
-            allowShipmentEmail = true;
-          } else {
-            target.style.background = '#ffa2a2';
-          }
-          target.value = target.value.replace(/_+/g, '_');
-          if (target.value === '') {
-            target.placeholder = "Образец: mail@domen.zone";
-          }
+          validEmail(target);
         }
 
         if (target.matches('#form3-phone')) {
-          if (/\+\d{11}/.test(target.value)) {
-            target.style.background = '#9eff78';
-            allowShipmentPhone = true;
-          } else {
-            target.style.background = '#ffa2a2';
-          }
-          if (target.value === '') {
-            target.placeholder = "Образец: +00000000000";
-          }
+          validPhone(target);
         }
 
-        if (allowShipmentName === true &&
-          allowShipmentEmail === true &&
-          allowShipmentPhone === true) {
-          btn.disabled = false;
-        }
-
+        activeButton(btn);
       });
 
       if (widthWin > 768) {
@@ -361,71 +401,29 @@ ourTeam();
 // header validation
 const headerValidation = () => {
 
-  let allowShipmentName = false;
-  let allowShipmentEmail = false;
-  let allowShipmentPhone = false;
-
   const form1 = document.querySelector('#form1');
 
   const btn = form1[3];
   btn.disabled = true;
 
-  form1.addEventListener('focusout', (e) => {
-    let target = e.target;
-    if (target.matches('#form2-name, #form2-email, #form2-phone',)) {
-      if (target.value === '') {
-        target.style.background = '';
-      }
-    }
-  });
+  backgroundOut(form1);
+
   form1.addEventListener('input', (e) => {
     let target = e.target;
 
     if (target.matches('#form1-name')) {
-      if (/^[а-яА-Я\s]+$/.test(target.value)) {
-        target.style.background = '#9eff78';
-        allowShipmentName = true;
-      } else {
-        target.style.background = '#ffa2a2';
-      }
-      if (target.value !== '') {
-        target.value =
-          target.value.split(/\s+/).map(word => word[0].toUpperCase() + word.substring(1).toLowerCase()).join(' ');
-      } else {
-        target.placeholder = "Имя русскими буквами";
-      }
+      validName(target);
     }
 
     if (target.matches('#form1-email')) {
-      if (/^\w+@{1}\w+\.\w{2,}$/.test(target.value)) {
-        target.style.background = '#9eff78';
-        allowShipmentEmail = true;
-      } else {
-        target.style.background = '#ffa2a2';
-      }
-      target.value = target.value.replace(/_+/g, '_');
-      if (target.value === '') {
-        target.placeholder = "Образец: mail@domen.zone";
-      }
+      validEmail(target);
     }
 
     if (target.matches('#form1-phone')) {
-      if (/\+\d{11}/.test(target.value)) {
-        target.style.background = '#9eff78';
-        allowShipmentPhone = true;
-      } else {
-        target.style.background = '#ffa2a2';
-      }
-      if (target.value === '') {
-        target.placeholder = "Образец: +00000000000";
-      }
+      validPhone(target);
     }
 
-    if (allowShipmentName === true &&
-      allowShipmentEmail === true &&
-      allowShipmentPhone === true) {
-      btn.disabled = false;
-    }
+    activeButton(btn);
   });
 };
 
@@ -434,85 +432,36 @@ headerValidation();
 
 // connect
 const formConnect = () => {
-
-  let allowShipmentName = false;
-  let allowShipmentEmail = false;
-  let allowShipmentPhone = false;
-  let allowShipmentMessage = false;
-
   const form2 = document.querySelector('#form2');
 
   const btn = form2[4];
   btn.disabled = true;
 
-  form2.addEventListener('focusout', (e) => {
-    let target = e.target;
-    if (target.matches('#form2-name, #form2-email, #form2-phone',)) {
-      if (target.value === '') {
-        target.style.background = '';
-      }
-    }
-  });
+  backgroundOut(form2);
 
   form2.addEventListener('input', (e) => {
     let target = e.target;
 
     if (target.matches('#form2-name')) {
-      if (/^[а-яА-Я\s]+$/.test(target.value)) {
-        target.style.background = '#9eff78';
-        allowShipmentName = true;
-      } else {
-        target.style.background = '#ffa2a2';
-      }
-      if (target.value !== '') {
-        target.value =
-          target.value.split(/\s+/).map(word => word[0].toUpperCase() + word.substring(1).toLowerCase()).join(' ');
-      } else {
-        target.placeholder = "Имя русскими буквами";
-      }
+      validName(target);
     }
 
     if (target.matches('#form2-email')) {
-      if (/^\w+@{1}\w+\.\w{2,}$/.test(target.value)) {
-        target.style.background = '#9eff78';
-        allowShipmentEmail = true;
-      } else {
-        target.style.background = '#ffa2a2';
-      }
-      target.value = target.value.replace(/_+/g, '_');
-      if (target.value === '') {
-        target.placeholder = "Образец: mail@domen.zone";
-      }
+      validEmail(target);
     }
 
     if (target.matches('#form2-phone')) {
-      if (/\+\d{11}/.test(target.value)) {
-        target.style.background = '#9eff78';
-        allowShipmentPhone = true;
-      } else {
-        target.style.background = '#ffa2a2';
-      }
-      if (target.value === '') {
-        target.placeholder = "Образец: +00000000000";
-      }
+      validPhone(target);
     }
 
     if (target.matches('#form2-message')) {
-      if (/^[\u0400-\u04FF\s\d\.\!\,-\:\(\)\"]+$/.test(target.value)) {
-        target.style.background = '#9eff78';
-        allowShipmentMessage = true;
-      } else {
-        target.style.background = '#ffa2a2';
-      }
-      if (target.value === '') {
-        target.placeholder = "Разрешен ввод только кирилицы";
-      }
+      validMessage(target);
     }
 
-    if (allowShipmentName === true &&
-      allowShipmentEmail === true &&
-      allowShipmentPhone === true &&
-      allowShipmentMessage === true) {
+    if (labelName === true &&
+      labelEmail === true &&
+      labelPhone === true &&
+      labelMessage === true) {
       btn.disabled = false;
     }
   });
@@ -619,8 +568,14 @@ const sendForm = () => {
 
   const cleanInput = () => {
     const formInputs = document.querySelectorAll('input');
+    const btnTypeSabmit = document.querySelectorAll('button[type="submit"]');
+
     formInputs.forEach(elem => {
       elem.value = '';
+    });
+
+    btnTypeSabmit.forEach(elem => {
+      elem.disabled = true;
     });
   };
 
@@ -632,7 +587,6 @@ const sendForm = () => {
       }
       if (request.status === 200) {
         resolve(request.status);
-        cleanInput();
       } else {
         reject(request.status);
       }
@@ -642,20 +596,12 @@ const sendForm = () => {
     request.send(JSON.stringify(body));
   });
 
-  const bodyDoc = document.body;
-  
-  bodyDoc.addEventListener('click', (e) => {
-    const target = e.target;
-    if (target.matches('button[type="submit"]')) {
-      target.disabled = true;
-    }
-  });
-
-  bodyDoc.addEventListener('submit', (e) => {
+  document.body.addEventListener('submit', (e) => {
     const target = e.target;
 
     if (target.matches('#form1, #form2, #form3')) {
       e.preventDefault();
+
       target.appendChild(statusMessage);
       statusMessage.textContent = loadMessage;
 
@@ -667,13 +613,16 @@ const sendForm = () => {
       });
 
       postData(body)
-        .then(() => {
-          statusMessage.textContent = successMessage;
-        },
-        (error) => {
-          statusMessage.textContent = errorMessage;
-          console.error(error);
-        });
+        .then(
+          () => {
+            statusMessage.textContent = successMessage;
+          },
+          (error) => {
+            statusMessage.textContent = errorMessage;
+            console.error('error', error);
+          }
+        )
+        .then(cleanInput);
     }
   });
 };
