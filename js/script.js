@@ -612,8 +612,8 @@ const sendForm = () => {
   const errorMessage = 'Что-то пошло не так!';
   const loadMessage = 'Загрузка...';
   const successMessage = 'Спасибо! Мы скоро с Вами свяжемся!';
-  const statusMessage = document.createElement('div');
 
+  const statusMessage = document.createElement('div');
   statusMessage.textContent = 'Тут будет сообщение!';
   statusMessage.style.cssText = 'font-size: 2rem';
 
@@ -639,7 +639,6 @@ const sendForm = () => {
     });
     request.open('POST', './server.php');
     request.setRequestHeader('Content-Type', 'application/json');
-
     request.send(JSON.stringify(body));
   };
 
@@ -666,6 +665,7 @@ const sendForm = () => {
       formData.forEach((val, key) => {
         body[key] = val;
       });
+
       postData(body,
         () => {
           statusMessage.textContent = successMessage;
