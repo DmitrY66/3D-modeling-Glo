@@ -6,7 +6,6 @@
 /* eslint-disable indent */
 /* eslint-disable strict */
 
-
 'use strict';
 
 
@@ -84,6 +83,7 @@ toggleMenu();
 
 // validation
 // ==============================================
+
 let labelName = false;
 let labelEmail = false;
 let labelPhone = false;
@@ -145,18 +145,18 @@ const validMessage = (target) => {
   }
 };
 
-const activeButton = (target) => {
+const activeButton = (button) => {
   if (labelName === true &&
     labelEmail === true &&
     labelPhone === true) {
-    target.disabled = false;
+    button.disabled = false;
   }
 };
 
-const backgroundOut = (target) => {
-  target.addEventListener('focusout', (e) => {
+const backgroundOut = (formInput, inputId) => {
+  formInput.addEventListener('focusout', (e) => {
     let target = e.target;
-    if (target.matches('#form2-name, #form2-email, #form2-phone, #form2-message',)) {
+    if (target.matches(inputId)) {
       if (target.value === '') {
         target.style.background = '';
       }
@@ -181,11 +181,12 @@ const togglePopup = () => {
 
       // popup validation
       const form3 = document.querySelector('#form3');
+      const targetIdF3 = '#form3-name, #form3-email, #form3-phone';
 
       const btn = form3[3];
       btn.disabled = true;
 
-      backgroundOut(form3);
+      backgroundOut(form3, targetIdF3);
 
       form3.addEventListener('input', (e) => {
         let target = e.target;
@@ -400,13 +401,13 @@ ourTeam();
 
 // header validation
 const headerValidation = () => {
-
   const form1 = document.querySelector('#form1');
+  const targetIdF1 = '#form1-name, #form1-email, #form1-phone';
 
   const btn = form1[3];
   btn.disabled = true;
 
-  backgroundOut(form1);
+  backgroundOut(form1, targetIdF1);
 
   form1.addEventListener('input', (e) => {
     let target = e.target;
@@ -433,11 +434,12 @@ headerValidation();
 // connect
 const formConnect = () => {
   const form2 = document.querySelector('#form2');
+  const targetIdF2 = '#form2-name, #form2-email, #form2-phone, #form2-message';
 
   const btn = form2[4];
   btn.disabled = true;
 
-  backgroundOut(form2);
+  backgroundOut(form2, targetIdF2);
 
   form2.addEventListener('input', (e) => {
     let target = e.target;
@@ -624,3 +626,4 @@ const sendForm = () => {
 };
 
 sendForm();
+
