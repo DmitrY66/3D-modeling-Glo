@@ -44,6 +44,8 @@ function counterTimer(deadLine) {
     timerSeconds.textContent = timer.seconds;
   }
 
+  updateClock();
+
   let repeatRun = setInterval(updateClock, 1000, deadLine);
 
   if (new Date().getTime() >= new Date(deadLine).getTime()) {

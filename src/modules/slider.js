@@ -65,10 +65,6 @@ const slider = () => {
     e.preventDefault();
     let target = e.target;
 
-    if (!target.matches('.portfolio-btn', '.dot')) {
-      return;
-    }
-
     prevSlide(portfolioItems, currentSlide, 'portfolio-item-active');
     prevSlide(dot, currentSlide, 'dot-active');
 
@@ -94,6 +90,7 @@ const slider = () => {
 
     nextSlide(portfolioItems, currentSlide, 'portfolio-item-active');
     nextSlide(dot, currentSlide, 'dot-active');
+
   });
 
   portfolioContent.addEventListener('mouseover', (e) => {
