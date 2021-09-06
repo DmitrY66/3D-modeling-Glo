@@ -54,24 +54,25 @@ const calculator = () => {
 
     // эффект вывода суммы
     const outputEffect = () => {
-      const time = 1000;
-      const step = 10;
+      const time = 100;
+      const step = 50;
       let n = 0;
       let t = Math.round(time / (total / step));
       let interval = setInterval(() => {
         n += step;
-        if (n === total) {
+        if (n >= total) {
           clearInterval(interval);
         }
         totalValue.textContent = n;
       }, t);
-
+      
       calcBlock.addEventListener('change', (e) => {
         const target = e.target;
         if (target.matches('select') || target.matches('input')) {
           clearInterval(interval);
         }
       });
+
     };
 
     calcBlock.addEventListener('change', (e) => {
@@ -79,7 +80,6 @@ const calculator = () => {
       if (target.matches('select') || target.matches('input')) {
         countSum();
         if (total !== 0) {
-
           outputEffect();
         } else {
           totalValue.textContent = total;
