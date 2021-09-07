@@ -322,7 +322,6 @@ display: none;
 
   formConnect();
 
-
 };
 
 export default validation;
