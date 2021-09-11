@@ -18,6 +18,7 @@ import ourTeam from './modules/ourTeam';
 import calculator from './modules/calculator';
 import sendForm from './modules/sendForm';
 import classSliderCarousel from './modules/sliderCarousel';
+import smoothScroll from './modules/smoothScroll';
 
 
 counterTimer('1 january 2022');
@@ -37,3 +38,5 @@ sendForm();
 validation();
 
 classSliderCarousel();
+
+smoothScroll();
