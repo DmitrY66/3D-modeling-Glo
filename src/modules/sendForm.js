@@ -11,12 +11,15 @@
 
 const sendForm = () => {
   const errorMessage = 'Что-то пошло не так!';
-  const loadMessage = 'Загрузка...';
+  // const loadMessage = 'Загрузка...';
   const successMessage = 'Спасибо! Мы скоро с Вами свяжемся!';
 
   const statusMessage = document.createElement('div');
   statusMessage.textContent = 'Тут будет сообщение!';
   statusMessage.style.cssText = 'font-size: 2rem';
+
+  const preloader = document.createElement('div');
+  preloader.className = 'sk-plane';
 
   const cleanInput = () => {
     const formInputs = document.querySelectorAll('input');
@@ -46,7 +49,10 @@ const sendForm = () => {
       e.preventDefault();
 
       target.appendChild(statusMessage);
-      statusMessage.textContent = loadMessage;
+      target.appendChild(preloader);
+
+      preloader.style.display = 'block';
+      statusMessage.textContent = '';
 
       const formData = new FormData(target);
       let body = {};
@@ -62,12 +68,14 @@ const sendForm = () => {
               throw new Error('status network not 200');
             }
             statusMessage.textContent = successMessage;
+            preloader.style.display = 'none';
           }
         )
         .then(cleanInput)
         .catch(
           (error) => {
             statusMessage.textContent = errorMessage;
+            preloader.style.display = 'none';
             console.error('errorische', error);
           }
         );

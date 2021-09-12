@@ -1,0 +1,24 @@
+/* preloader */
+.sk-plane {
+  width: 40px;
+  height: 40px;
+  background-color: #9eff78;
+  position: absolute;
+  left: 50%;
+  margin-top: -40px;
+  margin-left: -20px;
+  display: none;
+  animation: sk-plane 1.2s infinite ease-in-out;
+}
+
+@keyframes sk-plane {
+  0% {
+    transform: perspective(120px) rotateX(0deg) rotateY(0deg);
+  }
+  50% {
+    transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
+  }
+  100% {
+    transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+  }
+}
